@@ -21,13 +21,12 @@ export default class registe extends Component {
   }
 
   onSubmit = (e) =>{
-    // TODO: 跨域搞不定
-    axios.post('http://129.226.91.218:8807/user/registe',this.state)
+    axios.post('http://129.226.91.218:8807/user/register',this.state)
     .then(function(response){
-      // 
+      //TODO 写好路由之后可以做跳转
       console.log(response)
     })
-    console.log(this.state)
+
   }
 
   render() {

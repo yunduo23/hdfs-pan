@@ -21,13 +21,14 @@ export default class Login extends Component {
   }
 
   onSubmit = (e) =>{
-    // TODO: 跨域搞不定
     axios.post('http://129.226.91.218:8807/user/login',this.state)
     .then(function(response){
-      // 
-      console.log(response)
+
+      // 将认证信息存入local storage中，取出:window.localStorage.getItem("authorization")
+      window.localStorage.setItem("authorization", response.data.data)
+      
+      //TODO 写好路由之后可以做跳转
     })
-    console.log(this.state)
   }
 
   render() {
