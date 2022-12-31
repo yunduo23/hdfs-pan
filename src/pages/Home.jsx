@@ -1,7 +1,9 @@
 import React from 'react';
 import { Layout, Nav, Button, Breadcrumb, Skeleton, Avatar } from '@douyinfe/semi-ui';
 import { IconCloud, IconPlus, IconHelpCircle, IconBytedanceLogo, IconDescend2, IconSetting } from '@douyinfe/semi-icons';
-import SubTitle from "../compoments/SubTitle";
+import CreateDirectoryButton from "../compoments/CreateDirectoryButton";
+import UploadFileButton from "../compoments/UploadFileButton";
+import FileTable from "../compoments/FileTable";
 
 const { Header, Footer, Content } = Layout;
 
@@ -38,11 +40,13 @@ export default function Home() {
                         }}
                         routes={['我的文件', '文件名', '文件名', '文件名']}
                     />
-                    <IconPlus
+                    <div
                         style={{
-                            float: "right",
+                            float: "right"
                         }}>
-                    </IconPlus>
+                        <UploadFileButton></UploadFileButton>
+                        <CreateDirectoryButton></CreateDirectoryButton>
+                    </div>
                 </div>
                 <div
                     style={{
@@ -53,12 +57,7 @@ export default function Home() {
                         padding: '32px',
                     }}
                 >
-                    <Skeleton placeholder={<Skeleton.Paragraph rows={3} />} loading={false}>
-                        <SubTitle/>
-                        <p>Hi, Bytedance dance dance.</p>
-                        <p>sdadada</p>
-                        <p>Hi, Bytedance dance dance.</p>
-                    </Skeleton>
+                    <FileTable/>
                 </div>
             </Content>
             <Footer
