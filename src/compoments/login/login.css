@@ -70,17 +70,18 @@
 }
 
 
-.login a
+.login button
 {
   overflow: hidden;
   position: relative;
   padding: 10px 20px;
   color: #03e9f4;
+  background: linear-gradient(#141e30, #243b55);
   text-decoration: none;
   transition: all 0.5s;
 }
 
-.login a:hover
+.login button:hover
 {
   color: #FFF;
   border-radius: 5px;
@@ -92,12 +93,12 @@
   0 0 100px #03e9f4;
 }
 
-.login a span
+.login button span
 {
   position: absolute;
 }
 
-.login a span:nth-child(1)
+.login button span:nth-child(1)
 {
   top: 0;
   left: -100%;
@@ -123,7 +124,7 @@
   }
 }
 
-.login a span:nth-child(2)
+.login button span:nth-child(2)
 {
   top: -100%;
   right: 0;
@@ -149,7 +150,7 @@
 }
 
 
-.login a span:nth-child(3)
+.login button span:nth-child(3)
 {
   bottom: 0;
   right: -100%;
@@ -176,7 +177,7 @@
 }
 
 
-.login a span:last-child
+.login button span:last-child
 {
   bottom: -100%;
   left: 0;

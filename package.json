@@ -2,6 +2,7 @@
   "name": "hdfs-pan",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://129.226.91.218:8807",
   "dependencies": {
     "@douyinfe/semi-icons": "^2.26.0",
     "@douyinfe/semi-ui": "^2.26.0",
@@ -12,8 +13,10 @@
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.6",
+    "qs": "^6.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
     "tdesign-icons-react": "^0.1.7",
     "tdesign-react": "^0.45.0",
@@ -42,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-router": "^6.6.1"
   }
 }

@@ -1,13 +1,29 @@
 import React from 'react';
-import { Layout, Nav, Button, Breadcrumb, Skeleton, Avatar } from '@douyinfe/semi-ui';
-import { IconCloud, IconPlus, IconHelpCircle, IconBytedanceLogo, IconDescend2, IconSetting } from '@douyinfe/semi-icons';
+import { Layout, Nav, Button, Breadcrumb, Avatar, Space, Popover } from '@douyinfe/semi-ui';
+import { IconCloud, IconBytedanceLogo, IconDescend2 } from '@douyinfe/semi-icons';
 import CreateDirectoryButton from "../compoments/CreateDirectoryButton";
 import UploadFileButton from "../compoments/UploadFileButton";
 import FileTable from "../compoments/FileTable";
+import { Link } from "react-router-dom";
 
 const { Header, Footer, Content } = Layout;
 
-export default function Home() {
+const Home = () => {
+    const renderContent = ({ initialFocusRef }) => {
+        return (
+            <div style={{ padding: 12 }}>
+                <Space>
+                    <Button>
+                        <Link to='/login'>登陆</Link>
+                    </Button>
+                    <Button>
+                        <Link to='/register'>注册</Link>
+                    </Button>
+                </Space>
+            </div>
+        );
+    };
+
     return (
         <Layout style={{ border: '1px solid var(--semi-color-border)' }}>
             <Header style={{ backgroundColor: 'var(--semi-color-bg-1)' }}>
@@ -18,11 +34,12 @@ export default function Home() {
                             <div style={{ marginLeft: '12px', fontSize: 18 }}>HCloud</div>
                         </Nav.Header>
                         <Nav.Item itemKey="MyPage" text="我的文件" icon={<IconDescend2 size="large" />} />
-                        <Nav.Item itemKey="Setting" text="设置" icon={<IconSetting size="large" />} />
                         <Nav.Footer>
-                            <Avatar color="orange" size="small">
-                                YD
-                            </Avatar>
+                            <Popover content={renderContent} trigger="click">
+                                <Avatar color="orange" size="small">
+                                    {window.localStorage.getItem("username").charAt(0)}
+                                </Avatar>
+                            </Popover>
                         </Nav.Footer>
                     </Nav>
                 </div>
@@ -37,15 +54,16 @@ export default function Home() {
                     <Breadcrumb
                         style={{
                             float: "left"
-                        }}
-                        routes={['我的文件', '文件名', '文件名', '文件名']}
-                    />
+                        }}>
+                        <Breadcrumb.Item href="/">我的文件</Breadcrumb.Item>
+                    </Breadcrumb>
                     <div
                         style={{
                             float: "right"
                         }}>
-                        <UploadFileButton></UploadFileButton>
                         <CreateDirectoryButton></CreateDirectoryButton>
+                        <div style={{width: 360}}></div>
+                        <UploadFileButton></UploadFileButton>
                     </div>
                 </div>
                 <div
@@ -53,7 +71,7 @@ export default function Home() {
                         marginTop: '40px',
                         borderRadius: '10px',
                         border: '1px solid var(--semi-color-border)',
-                        height: '376px',
+                        height: 'auto',
                         padding: '32px',
                     }}
                 >
@@ -69,16 +87,18 @@ export default function Home() {
                     backgroundColor: 'rgba(var(--semi-grey-0), 1)',
                 }}
             >
-                <span
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                    }}
-                >
-                    <IconBytedanceLogo size="large" style={{ marginRight: '8px' }} />
-                    <span>大数据小组. </span>
-                </span>
+            <span
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}
+            >
+                <IconBytedanceLogo size="large" style={{ marginRight: '8px' }} />
+                <span>大数据小组. </span>
+            </span>
             </Footer>
         </Layout>
     )
 }
+
+export default Home

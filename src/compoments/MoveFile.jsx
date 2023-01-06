@@ -1,40 +1,38 @@
-import React, {useState, useContext} from "react";
-import {Button, Modal} from "@douyinfe/semi-ui";
+import React, {useContext, useState} from "react";
+import {Button, Modal, Input} from "@douyinfe/semi-ui";
 import axios from "axios";
 import MyContext from "../context"
+
+const qs = require('qs')
 
 const DeleteFile = () => {
     const context = useContext(MyContext)
 
     const [visible, setVisible] = useState(false)
+    const [text, setText] = useState('')
     const [name, setName] = useState('')
-    const [dirPath, setDirPath] = useState('')
+    const [path, setPath] = useState('')
+
 
     const showDialog = () => {
         setVisible(true)
         setName(context[0].name)
-        console.log(name)
-        let midPath
-        if(window.localStorage.getItem("path") === "/"){
-            midPath = `${window.localStorage.getItem("path")}${name}`
-        } else {
-            midPath = `${window.localStorage.getItem("path")}/${name}`
-        }
-        setDirPath(midPath)
     }
+
     const handleOk = (e) => {
-        axios.delete('/api/hdfs',{
+        axios.put('/api/hdfs', null,{
             params: {
-                path: `${dirPath}`
+                oldPath: `${window.localStorage.getItem("path")}/${name}`,
+                newPath: `${text}/${name}`
             },
-            headers: {
-                Authorization: window.localStorage.getItem("authorization")
-            }
+            headers:{
+                Authorization: localStorage.getItem("authorization")
+            },
         })
-            .then((response) => {
+            .then(function (response){
                 console.log(response)
             })
-            .catch((error) => {
+            .catch(function (error){
                 console.log(error.response)
             })
             .finally(() => {
@@ -46,22 +44,31 @@ const DeleteFile = () => {
         setVisible(false)
     }
 
+    const onChange = (text) => {
+        setText(text)
+    }
+
     return (
         <>
             <Button
                 onClick={showDialog}
                 style={{marginLeft: 4}}
-            >删除</Button>
+            >移动</Button>
             <Modal
                 header={null}
                 visible={visible}
                 onOk={handleOk}
                 onCancel={handleCancel}>
-                <h3 style={{ textAlign: 'center', fontSize: 24, margin: 40 }}>确定要删除这个文件吗？</h3>
+                <p style={{ textAlign: 'center', fontSize: 24, margin: 40 }}>将文件移动到：</p>
+                <Input
+                    onChange={onChange}
+                    showClear
+                    value={text}
+                    addonBefore="/">
+                </Input>
             </Modal>
         </>
     )
-
 }
 
 export default DeleteFile
