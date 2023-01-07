@@ -11,8 +11,42 @@ const DeleteFile = () => {
     const [visible, setVisible] = useState(false)
     const [text, setText] = useState('')
     const [name, setName] = useState('')
-    const [path, setPath] = useState('')
+    const [data, setData] = useState([])
 
+    const sortBy = ['dir', 'file']
+
+    const getData = () => {
+        axios.get('/api/hdfs/list',{
+            params: {
+                path: window.localStorage.getItem("path")
+            },
+            headers: {
+                Authorization: window.localStorage.getItem("authorization")
+            }
+        })
+            .then((response) => {
+                console.log(response)
+                let midData = response.data.data
+                customSort({data: midData, sortBy, sortField: 'type'})
+                let Data = [...midData]
+                setData(Data)
+                context[1][1](midData)
+                console.log(data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    const customSort = ({data, sortBy, sortField}) => {
+        const sortByObject = sortBy.reduce(
+            (obj, item, index) => ({
+                ...obj,
+                [item]: index
+            }),{}
+        )
+        return data.sort((a, b) => sortByObject[a[sortField]] - sortByObject[b[sortField]])
+    }
 
     const showDialog = () => {
         setVisible(true)
@@ -31,6 +65,7 @@ const DeleteFile = () => {
         })
             .then(function (response){
                 console.log(response)
+                getData()
             })
             .catch(function (error){
                 console.log(error.response)

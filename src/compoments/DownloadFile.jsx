@@ -8,16 +8,25 @@ const DeleteFile = () => {
 
     const [visible, setVisible] = useState(false)
     const [name, setName] = useState('')
+    const [dirPath, setDirPath] = useState('')
 
     const showDialog = () => {
         setVisible(true)
         setName(context[0].name)
+        console.log(name)
+        let midPath
+        if(window.localStorage.getItem("path") === "/"){
+            midPath = `${window.localStorage.getItem("path")}${name}`
+        } else {
+            midPath = `${window.localStorage.getItem("path")}/${name}`
+        }
+        setDirPath(midPath)
     }
 
     const handleOk = (e) => {
         axios.get('/api/hdfs/download', {
             params: {
-                path: `${window.localStorage.getItem("path")}`
+                path: `${dirPath}`
             },
             headers: {
                 Authorization: window.localStorage.getItem("authorization")

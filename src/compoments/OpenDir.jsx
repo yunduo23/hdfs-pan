@@ -23,8 +23,10 @@ const OpenDir = () => {
                 console.log(response)
                 let midData = response.data.data
                 customSort({data: midData, sortBy, sortField: 'type'})
-                setData(midData)
+                let Data = [...midData]
+                setData(Data)
                 context[1][1](midData)
+                console.log(data)
             })
             .catch((error) => {
                 console.log(error)
@@ -57,6 +59,7 @@ const OpenDir = () => {
         window.localStorage.setItem("name", context[0].name)
         console.log(window.localStorage.getItem("path"))
         console.log(window.localStorage.getItem("name"))
+        getData()
     }
 
     return (

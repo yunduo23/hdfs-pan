@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import {Button, Modal} from "@douyinfe/semi-ui";
 import axios from "axios";
 import MyContext from "../context"
@@ -9,6 +9,42 @@ const DeleteFile = () => {
     const [visible, setVisible] = useState(false)
     const [name, setName] = useState('')
     const [dirPath, setDirPath] = useState('')
+    const [data, setData] = useState([])
+
+    const sortBy = ['dir', 'file']
+
+    const getData = () => {
+        axios.get('/api/hdfs/list',{
+            params: {
+                path: window.localStorage.getItem("path")
+            },
+            headers: {
+                Authorization: window.localStorage.getItem("authorization")
+            }
+        })
+            .then((response) => {
+                console.log(response)
+                let midData = response.data.data
+                customSort({data: midData, sortBy, sortField: 'type'})
+                let Data = [...midData]
+                setData(Data)
+                context[1][1](midData)
+                console.log(data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    const customSort = ({data, sortBy, sortField}) => {
+        const sortByObject = sortBy.reduce(
+            (obj, item, index) => ({
+                ...obj,
+                [item]: index
+            }),{}
+        )
+        return data.sort((a, b) => sortByObject[a[sortField]] - sortByObject[b[sortField]])
+    }
 
     const showDialog = () => {
         setVisible(true)
@@ -22,6 +58,7 @@ const DeleteFile = () => {
         }
         setDirPath(midPath)
     }
+
     const handleOk = (e) => {
         axios.delete('/api/hdfs',{
             params: {
@@ -38,6 +75,7 @@ const DeleteFile = () => {
                 console.log(error.response)
             })
             .finally(() => {
+                getData()
                 setVisible(false)
             })
     }

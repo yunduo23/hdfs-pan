@@ -123,6 +123,7 @@ const FileTable = () => {
                 console.log(window.localStorage.getItem("name"))
                 let midPath = window.localStorage.getItem("path").slice(0,-window.localStorage.getItem("name").length)
                 window.localStorage.setItem("path", midPath)
+                getData()
             }}>返回</Button>
         </div>
     )
